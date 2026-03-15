@@ -3,138 +3,107 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>Marathon Prep Dashboard</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <title>Interactive Marathon Dashboard</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
-        /* CSS from styles.css.docx */
-        :root{ --bg: #0b0f14; --panel: #0e141c; --panel2: #0c1219; --stroke: rgba(255,255,255,.10); --stroke2: rgba(255,255,255,.06); --text: rgba(255,255,255,.92); --muted: rgba(255,255,255,.55); --muted2: rgba(255,255,255,.35); --teal: #54d2d4; --blue: #5aa6ff; --orange: #ffb35c; --pink: #ff6db5; --green: #4de28b; --radius: 16px; }
+        :root{ --bg: #0b0f14; --panel: #0e141c; --text: rgba(255,255,255,.92); --muted: rgba(255,255,255,.55); --blue: #5aa6ff; --radius: 16px; }
         * { box-sizing:border-box; }
-        html,body{ height:100%; }
-        body{ margin:0; font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; color: var(--text); background: radial-gradient(1200px 700px at 60% 35%, rgba(90,166,255,.16), transparent 55%), radial-gradient(900px 600px at 35% 55%, rgba(84,210,212,.12), transparent 60%), radial-gradient(900px 700px at 65% 70%, rgba(255,109,181,.08), transparent 60%), linear-gradient(#0a0e13, #070a0f); }
-        .stage{ min-height:100%; display:grid; place-items:center; padding: 48px 18px; }
-        .tablet{ width: min(1080px, 96vw); border-radius: 22px; background: linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.015)); border: 1px solid rgba(255,255,255,.14); box-shadow: 0 28px 90px rgba(0,0,0,.65), inset 0 1px 0 rgba(255,255,255,.08); overflow:hidden; }
-        .topbar{ display:flex; justify-content:space-between; align-items:flex-start; padding: 20px 22px 14px; background: linear-gradient(180deg, rgba(0,0,0,.20), rgba(0,0,0,.00)); border-bottom: 1px solid var(--stroke2); }
-        .title{ letter-spacing:.06em; font-weight:700; font-size: 18px; text-transform:uppercase; }
-        .muted{ color: var(--muted); font-weight:600; }
-        .tabs{ display:flex; gap: 18px; margin-top: 10px; flex-wrap:wrap; }
-        .tab{ border:0; background: transparent; color: var(--muted); font-weight:700; font-size: 12px; letter-spacing:.07em; padding: 8px 0; cursor:pointer; position:relative; }
-        .tab.is-active{ color: rgba(255,255,255,.88); }
-        .tab.is-active::after{ content:""; position:absolute; left:0; right:0; bottom:-6px; height:2px; background: linear-gradient(90deg, rgba(84,210,212,.0), rgba(84,210,212,.85), rgba(84,210,212,.0)); }
-        .actions{ display:flex; align-items:center; gap: 12px; padding-top: 2px; }
-        .btn{ border: 1px solid rgba(255,255,255,.14); background: rgba(255,255,255,.06); color: rgba(255,255,255,.86); padding: 8px 14px; border-radius: 10px; font-weight:700; cursor:pointer; }
-        .btn:hover{ background: rgba(255,255,255,.09); }
-        .avatar{ width: 28px; height: 28px; border-radius: 999px; background: radial-gradient(circle at 30% 35%, rgba(255,255,255,.35), transparent 45%), linear-gradient(135deg, rgba(90,166,255,.9), rgba(255,109,181,.8)); border: 1px solid rgba(255,255,255,.18); }
-        .content{ padding: 18px 22px 26px; background: linear-gradient(180deg, rgba(0,0,0,.00), rgba(0,0,0,.18)); }
-        .grid{ display:grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
-        .card{ background: linear-gradient(180deg, rgba(12,18,25,.92), rgba(9,13,19,.92)); border: 1px solid rgba(255,255,255,.14); border-radius: var(--radius); padding: 16px; box-shadow: 0 18px 40px rgba(0,0,0,.45), inset 0 1px 0 rgba(255,255,255,.06); min-height: 310px; position:relative; }
-        .card__kicker{ font-weight:800; letter-spacing:.08em; text-transform:uppercase; font-size: 12px; color: rgba(255,255,255,.72); margin-bottom: 14px; }
-        .field{ margin: 12px 0; }
-        .label{ font-size: 12px; color: var(--muted); margin-bottom: 8px; }
-        .inputlike{ border-radius: 12px; border: 1px solid rgba(255,255,255,.14); background: rgba(255,255,255,.04); padding: 10px 12px; }
-        .inputlike input{ width:100%; border:0; outline:none; background:transparent; color: rgba(255,255,255,.9); font-weight:700; font-size: 14px; }
-        .card--center .stat, .card--right .pace{ border: 1px solid rgba(255,255,255,.12); background: rgba(255,255,255,.03); border-radius: 14px; padding: 12px 12px; margin-top: 12px; }
-        .stat__label, .pace__label{ font-size: 12px; color: var(--muted); margin-bottom: 6px; }
-        .stat__value, .pace__value{ font-weight:800; letter-spacing:.02em; font-size: 22px; }
-        .stat__value--small{ font-size: 20px; }
-        .centerRow{ display:flex; align-items:center; justify-content:center; gap: 12px; margin: 8px 0 10px; }
-        .miniIcon{ width: 44px; height: 44px; display:grid; place-items:center; border-radius: 14px; border: 1px solid rgba(255,255,255,.12); background: rgba(255,255,255,.04); filter: saturate(1.2); }
-        .miniIcon--blue{ background: rgba(90,166,255,.08); border-color: rgba(90,166,255,.25); }
-        .dividerV{ width: 1px; height: 36px; background: rgba(255,255,255,.12); }
-        .pair{ display:flex; justify-content:space-between; margin-top: 2px; color: var(--muted2); font-size: 12px; }
-        .iconRow{ display:flex; gap: 10px; margin: 6px 0 10px; }
-        .chipIcon{ width: 36px; height: 36px; border-radius: 999px; display:grid; place-items:center; border: 1px solid rgba(255,255,255,.14); background: rgba(255,255,255,.04); }
-        .chipIcon--cyan{ background: rgba(84,210,212,.12); border-color: rgba(84,210,212,.28); }
-        .chipIcon--orange{ background: rgba(255,179,92,.12); border-color: rgba(255,179,92,.28); }
-        .chipIcon--pink{ background: rgba(255,109,181,.10); border-color: rgba(255,109,181,.28); }
-        .mapline{ height: 110px; margin-top: 12px; border-radius: 18px; border: 1px solid rgba(255,255,255,.08); background: radial-gradient(900px 180px at 40% 30%, rgba(90,166,255,.08), transparent 55%), radial-gradient(900px 180px at 65% 70%, rgba(84,210,212,.07), transparent 60%), linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,.01)); opacity: .9; }
-        @media (max-width: 980px){ .grid{ grid-template-columns: 1fr; } .card{ min-height: auto; } .topbar{ gap: 12px; flex-direction:column; align-items:stretch; } .actions{ justify-content:space-between; } }
+        body{ margin:0; font-family: 'Inter', sans-serif; color: var(--text); background: #0a0e13; display: grid; place-items: center; min-height: 100vh; padding: 20px; }
+        .tablet{ width: min(1000px, 95vw); border-radius: 22px; background: rgba(255,255,255,.03); border: 1px solid rgba(255,255,255,.1); padding: 30px; box-shadow: 0 20px 50px rgba(0,0,0,0.5); }
+        .grid{ display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+        .card{ background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.1); border-radius: var(--radius); padding: 20px; }
+        .title{ font-weight:700; font-size: 14px; color: var(--blue); margin-bottom: 15px; text-transform: uppercase; }
+        .field{ margin-bottom: 15px; }
+        label{ display:block; font-size: 12px; color: var(--muted); margin-bottom: 5px; }
+        input{ width:100%; background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.2); color: white; padding: 10px; border-radius: 8px; font-weight: 700; }
+        .result-box{ background: rgba(90,166,255,.1); padding: 15px; border-radius: 12px; margin-top: 10px; }
+        .val{ font-size: 24px; font-weight: 800; display: block; }
     </style>
 </head>
 <body>
-<main class="stage">
-    <section class="tablet" role="application" aria-label="Dashboard">
-        <header class="topbar">
-            <div class="brand">
-                <div class="title">MARATHON PREP DASHBOARD | [YOUR NAME]</div>
-                <nav class="tabs" aria-label="Sections">
-                    <button class="tab is-active" data-tab="dashboard">DASHBOARD</button>
-                    <button class="tab" data-tab="training">TRAINING PLAN</button>
-                    <button class="tab" data-tab="fueling">FUELING STRATEGY</button>
-                    <button class="tab" data-tab="gear">GEAR TRACKER</button>
-                </nav>
+
+<div class="tablet">
+    <div class="grid">
+        <div class="card">
+            <div class="title">1. Your Baseline</div>
+            <div class="field">
+                <label>Recent Race Distance (Miles)</label>
+                <input type="number" id="dist1" value="3.1" step="0.1">
             </div>
-            <div class="actions">
-                <button class="btn">Export</button>
-                <div class="avatar" aria-hidden="true"></div>
+            <div class="field">
+                <label>Recent Time (Minutes)</label>
+                <input type="number" id="time1" value="25">
             </div>
-        </header>
-        <section class="content">
-            <div class="grid">
-                <article class="card">
-                    <div class="card__kicker">STEP 1: YOUR FITNESS BASELINE</div>
-                    <div class="field">
-                        <div class="label">Recent Race Distance (Miles)</div>
-                        <div class="inputlike"><input value="3.1" aria-label="Recent Race Distance (Miles)" /></div>
-                    </div>
-                    <div class="field">
-                        <div class="label">Recent Race Time (HH:MM:SS)</div>
-                        <div class="inputlike"><input value="00:25:00" aria-label="Recent Race Time (HH:MM:SS)" /></div>
-                    </div>
-                    <div class="field">
-                        <div class="label">Target Race Distance (Miles)</div>
-                        <div class="inputlike"><input value="26.2" aria-label="Target Race Distance (Miles)" /></div>
-                    </div>
-                </article>
-                <article class="card card--center">
-                    <div class="card__kicker">STEP 2: RIEGEL'S PREDICTION</div>
-                    <div class="centerRow">
-                        <div class="miniIcon" aria-hidden="true"> 🏃 </div>
-                        <div class="dividerV" aria-hidden="true"></div>
-                        <div class="miniIcon miniIcon--blue" aria-hidden="true"> 🏃 </div>
-                    </div>
-                    <div class="pair">
-                        <div class="pair__label">5k Baseline</div>
-                        <div class="pair__label pair__label--right">Predicted Marathon</div>
-                    </div>
-                    <div class="stat">
-                        <div class="stat__label">Predicted Marathon Time</div>
-                        <div class="stat__value">4:00:09</div>
-                    </div>
-                    <div class="stat">
-                        <div class="stat__label">Target Marathon Pace (Per Mile)</div>
-                        <div class="stat__value stat__value--small">0:09:10</div>
-                    </div>
-                </article>
-                <article class="card card--right">
-                    <div class="card__kicker">STEP 3: PERSONAL TRAINING PACES</div>
-                    <div class="iconRow" aria-hidden="true"> 🍽️ 🏃 ⏱️ </div>
-                    <div class="pace">
-                        <div class="pace__label">Easy / Long Pace</div>
-                        <div class="pace__value">0:10:40</div>
-                    </div>
-                    <div class="pace">
-                        <div class="pace__label">Tempo / Threshold Pace</div>
-                        <div class="pace__value">0:37:09</div>
-                    </div>
-                    <div class="pace">
-                        <div class="pace__label">Speed / VO2 Max Pace (5k)</div>
-                        <div class="pace__value">0:08:04</div>
-                    </div>
-                </article>
+            <div class="field">
+                <label>Target Race Distance (Miles)</label>
+                <input type="number" id="dist2" value="26.2" step="0.1">
             </div>
-            <div class="mapline" aria-hidden="true"></div>
-        </section>
-    </section>
-</main>
+        </div>
+
+        <div class="card">
+            <div class="title">2. Predictions</div>
+            <div class="result-box">
+                <label>Predicted Finish Time</label>
+                <span class="val" id="predTime">--:--:--</span>
+            </div>
+            <div class="result-box">
+                <label>Target Pace (Min/Mile)</label>
+                <span class="val" id="targetPace">--:--</span>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="title">3. Training Paces</div>
+            <div class="field">
+                <label>Easy Run Pace</label>
+                <span id="easyPace" style="font-weight:700;">--:--</span>
+            </div>
+            <div class="field">
+                <label>Tempo Run Pace</label>
+                <span id="tempoPace" style="font-weight:700;">--:--</span>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script>
-    document.querySelectorAll(".tab").forEach(btn => {
-        btn.addEventListener("click", () => {
-            document.querySelectorAll(".tab").forEach(b => b.classList.remove("is-active"));
-            btn.classList.add("is-active");
-        });
+    function calculate() {
+        const d1 = parseFloat(document.getElementById('dist1').value);
+        const t1 = parseFloat(document.getElementById('time1').value);
+        const d2 = parseFloat(document.getElementById('dist2').value);
+
+        if (d1 > 0 && t1 > 0 && d2 > 0) {
+            // Riegel Formula Calculation
+            const t2 = t1 * Math.pow((d2 / d1), 1.06);
+            
+            // Format Time
+            const hours = Math.floor(t2 / 60);
+            const minutes = Math.floor(t2 % 60);
+            document.getElementById('predTime').innerText = `${hours}h ${minutes}m`;
+
+            // Calculate Pace
+            const paceDec = t2 / d2;
+            const paceMin = Math.floor(paceDec);
+            const paceSec = Math.round((paceDec - paceMin) * 60);
+            document.getElementById('targetPace').innerText = `${paceMin}:${paceSec < 10 ? '0' : ''}${paceSec}`;
+
+            // Suggested Training Paces (Roughly 20% slower for Easy)
+            const easy = paceDec * 1.25;
+            document.getElementById('easyPace').innerText = `${Math.floor(easy)}:${Math.round((easy % 1) * 60)} min/mile`;
+            
+            const tempo = paceDec * 1.05;
+            document.getElementById('tempoPace').innerText = `${Math.floor(tempo)}:${Math.round((tempo % 1) * 60)} min/mile`;
+        }
+    }
+
+    // Run calculation whenever a user types
+    document.querySelectorAll('input').forEach(input => {
+        input.addEventListener('input', calculate);
     });
+
+    // Run once on load
+    calculate();
 </script>
+
 </body>
 </html>
