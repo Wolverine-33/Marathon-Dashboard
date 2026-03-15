@@ -1,109 +1,129 @@
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>Interactive Marathon Dashboard</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-    <style>
-        :root{ --bg: #0b0f14; --panel: #0e141c; --text: rgba(255,255,255,.92); --muted: rgba(255,255,255,.55); --blue: #5aa6ff; --radius: 16px; }
-        * { box-sizing:border-box; }
-        body{ margin:0; font-family: 'Inter', sans-serif; color: var(--text); background: #0a0e13; display: grid; place-items: center; min-height: 100vh; padding: 20px; }
-        .tablet{ width: min(1000px, 95vw); border-radius: 22px; background: rgba(255,255,255,.03); border: 1px solid rgba(255,255,255,.1); padding: 30px; box-shadow: 0 20px 50px rgba(0,0,0,0.5); }
-        .grid{ display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
-        .card{ background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.1); border-radius: var(--radius); padding: 20px; }
-        .title{ font-weight:700; font-size: 14px; color: var(--blue); margin-bottom: 15px; text-transform: uppercase; }
-        .field{ margin-bottom: 15px; }
-        label{ display:block; font-size: 12px; color: var(--muted); margin-bottom: 5px; }
-        input{ width:100%; background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.2); color: white; padding: 10px; border-radius: 8px; font-weight: 700; }
-        .result-box{ background: rgba(90,166,255,.1); padding: 15px; border-radius: 12px; margin-top: 10px; }
-        .val{ font-size: 24px; font-weight: 800; display: block; }
-    </style>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <title></title>
+  <meta name="Generator" content="Cocoa HTML Writer">
+  <meta name="CocoaVersion" content="2566">
+  <style type="text/css">
+    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica}
+    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica; min-height: 14.0px}
+  </style>
 </head>
 <body>
-
-<div class="tablet">
-    <div class="grid">
-        <div class="card">
-            <div class="title">1. Your Baseline</div>
-            <div class="field">
-                <label>Recent Race Distance (Miles)</label>
-                <input type="number" id="dist1" value="3.1" step="0.1">
-            </div>
-            <div class="field">
-                <label>Recent Time (Minutes)</label>
-                <input type="number" id="time1" value="25">
-            </div>
-            <div class="field">
-                <label>Target Race Distance (Miles)</label>
-                <input type="number" id="dist2" value="26.2" step="0.1">
-            </div>
-        </div>
-
-        <div class="card">
-            <div class="title">2. Predictions</div>
-            <div class="result-box">
-                <label>Predicted Finish Time</label>
-                <span class="val" id="predTime">--:--:--</span>
-            </div>
-            <div class="result-box">
-                <label>Target Pace (Min/Mile)</label>
-                <span class="val" id="targetPace">--:--</span>
-            </div>
-        </div>
-
-        <div class="card">
-            <div class="title">3. Training Paces</div>
-            <div class="field">
-                <label>Easy Run Pace</label>
-                <span id="easyPace" style="font-weight:700;">--:--</span>
-            </div>
-            <div class="field">
-                <label>Tempo Run Pace</label>
-                <span id="tempoPace" style="font-weight:700;">--:--</span>
-            </div>
-        </div>
-    </div>
-</div>
-
-<script>
-    function calculate() {
-        const d1 = parseFloat(document.getElementById('dist1').value);
-        const t1 = parseFloat(document.getElementById('time1').value);
-        const d2 = parseFloat(document.getElementById('dist2').value);
-
-        if (d1 > 0 && t1 > 0 && d2 > 0) {
-            // Riegel Formula Calculation
-            const t2 = t1 * Math.pow((d2 / d1), 1.06);
-            
-            // Format Time
-            const hours = Math.floor(t2 / 60);
-            const minutes = Math.floor(t2 % 60);
-            document.getElementById('predTime').innerText = `${hours}h ${minutes}m`;
-
-            // Calculate Pace
-            const paceDec = t2 / d2;
-            const paceMin = Math.floor(paceDec);
-            const paceSec = Math.round((paceDec - paceMin) * 60);
-            document.getElementById('targetPace').innerText = `${paceMin}:${paceSec < 10 ? '0' : ''}${paceSec}`;
-
-            // Suggested Training Paces (Roughly 20% slower for Easy)
-            const easy = paceDec * 1.25;
-            document.getElementById('easyPace').innerText = `${Math.floor(easy)}:${Math.round((easy % 1) * 60)} min/mile`;
-            
-            const tempo = paceDec * 1.05;
-            document.getElementById('tempoPace').innerText = `${Math.floor(tempo)}:${Math.round((tempo % 1) * 60)} min/mile`;
-        }
-    }
-
-    // Run calculation whenever a user types
-    document.querySelectorAll('input').forEach(input => {
-        input.addEventListener('input', calculate);
-    });
-
-    // Run once on load
-    calculate();
-</script>
-
+<p class="p1">&lt;!doctype html&gt;</p>
+<p class="p1">&lt;html lang="en"&gt;</p>
+<p class="p1">&lt;head&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;meta charset="utf-8" /&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;meta name="viewport" content="width=device-width,initial-scale=1" /&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;title&gt;Interactive Marathon Dashboard&lt;/title&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;display=swap" rel="stylesheet"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;style&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>:root{ --bg: #0b0f14; --panel: #0e141c; --text: rgba(255,255,255,.92); --muted: rgba(255,255,255,.55); --blue: #5aa6ff; --radius: 16px; }</p>
+<p class="p1"><span class="Apple-converted-space">        </span>* { box-sizing:border-box; }</p>
+<p class="p1"><span class="Apple-converted-space">        </span>body{ margin:0; font-family: 'Inter', sans-serif; color: var(--text); background: #0a0e13; display: grid; place-items: center; min-height: 100vh; padding: 20px; }</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.tablet{ width: min(1000px, 95vw); border-radius: 22px; background: rgba(255,255,255,.03); border: 1px solid rgba(255,255,255,.1); padding: 30px; box-shadow: 0 20px 50px rgba(0,0,0,0.5); }</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.grid{ display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.card{ background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.1); border-radius: var(--radius); padding: 20px; position: relative; }</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.title{ font-weight:700; font-size: 14px; color: var(--blue); margin-bottom: 15px; text-transform: uppercase; }</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.field{ margin-bottom: 15px; }</p>
+<p class="p1"><span class="Apple-converted-space">        </span>label{ display:block; font-size: 12px; color: var(--muted); margin-bottom: 5px; }</p>
+<p class="p1"><span class="Apple-converted-space">        </span>input{ width:100%; background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.2); color: white; padding: 10px; border-radius: 8px; font-weight: 700; }</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.result-box{ background: rgba(90,166,255,.1); padding: 15px; border-radius: 12px; margin-top: 10px; }</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.val{ font-size: 24px; font-weight: 800; display: block; }</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.reset-btn { width: 100%; margin-top: 10px; background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.2); color: white; padding: 8px; border-radius: 8px; cursor: pointer; font-size: 11px; font-weight: 700; text-transform: uppercase; transition: 0.3s; }</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.reset-btn:hover { background: rgba(255, 77, 77, 0.2); border-color: #ff4d4d; }</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/style&gt;</p>
+<p class="p1">&lt;/head&gt;</p>
+<p class="p1">&lt;body&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;div class="tablet"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="grid"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="card"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="title"&gt;1. Your Baseline&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="field"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;label&gt;Recent Race Distance (Miles)&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;input type="number" id="dist1" value="3.1" step="0.1"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="field"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;label&gt;Recent Time (Minutes)&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;input type="number" id="time1" value="25"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="field"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;label&gt;Target Race Distance (Miles)&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;input type="number" id="dist2" value="26.2" step="0.1"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;button class="reset-btn" onclick="resetForm()"&gt;Reset Dashboard&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="card"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="title"&gt;2. Predictions&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="result-box"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;label&gt;Predicted Finish Time&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;span class="val" id="predTime"&gt;--:--:--&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="result-box"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;label&gt;Target Pace (Min/Mile)&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;span class="val" id="targetPace"&gt;--:--&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="card"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="title"&gt;3. Training Paces&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="field"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;label&gt;Easy Run Pace&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;span id="easyPace" style="font-weight:700;"&gt;--:--&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="field"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;label&gt;Tempo Run Pace&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;span id="tempoPace" style="font-weight:700;"&gt;--:--&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p1">&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;script&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>// The "Brain" for calculations</p>
+<p class="p1"><span class="Apple-converted-space">    </span>function calculate() {</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const d1 = parseFloat(document.getElementById('dist1').value);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const t1 = parseFloat(document.getElementById('time1').value);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const d2 = parseFloat(document.getElementById('dist2').value);</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>if (d1 &gt; 0 &amp;&amp; t1 &gt; 0 &amp;&amp; d2 &gt; 0) {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const t2 = t1 * Math.pow((d2 / d1), 1.06);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const hours = Math.floor(t2 / 60);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const minutes = Math.floor(t2 % 60);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>document.getElementById('predTime').innerText = `${hours}h ${minutes}m`;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>const paceDec = t2 / d2;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const paceMin = Math.floor(paceDec);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const paceSec = Math.round((paceDec - paceMin) * 60);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>document.getElementById('targetPace').innerText = `${paceMin}:${paceSec &lt; 10 ? '0' : ''}${paceSec}`;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>const easy = paceDec * 1.25;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>document.getElementById('easyPace').innerText = `${Math.floor(easy)}:${Math.round((easy % 1) * 60)} min/mile`;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const tempo = paceDec * 1.05;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>document.getElementById('tempoPace').innerText = `${Math.floor(tempo)}:${Math.round((tempo % 1) * 60)} min/mile`;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>// The Reset Function</p>
+<p class="p1"><span class="Apple-converted-space">    </span>function resetForm() {</p>
+<p class="p1"><span class="Apple-converted-space">        </span>document.getElementById('dist1').value = 3.1;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>document.getElementById('time1').value = 25;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>document.getElementById('dist2').value = 26.2;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>calculate(); // Run calculation once more to refresh the display</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>document.querySelectorAll('input').forEach(input =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">        </span>input.addEventListener('input', calculate);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>});</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>calculate();</p>
+<p class="p1">&lt;/script&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;/body&gt;</p>
+<p class="p1">&lt;/html&gt;</p>
 </body>
 </html>
